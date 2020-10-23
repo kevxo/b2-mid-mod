@@ -11,6 +11,7 @@ RSpec.describe 'As a user' do
       RideMechanic.create(ride_id: ride1.id, mechanic_id: mechanic2.id)
       RideMechanic.create(ride_id: ride2.id, mechanic_id: mechanic2.id)
       RideMechanic.create(ride_id: ride3.id, mechanic_id: mechanic2.id)
+      visit "/mechanics/#{mechanic2.id}"
 
       expect(page).to have_content("Mechanic: #{mechanic2.name}")
       expect(page).to have_content("Years of Experience: #{mechanic2.experience}")
@@ -29,8 +30,10 @@ RSpec.describe 'As a user' do
       fill_in :name, with: name
       fill_in :rating, with: rating
 
+      save_and_open_page
       expect(page).to have_button('Submit')
       click_on 'Submit'
+      expect(current_path).to eq("/mechanics/#{mechanic2.id}")
     end
   end
 end
