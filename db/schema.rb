@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_23_153349) do
+ActiveRecord::Schema.define(version: 2020_10_23_164012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 2020_10_23_153349) do
   create_table "parks", force: :cascade do |t|
     t.string "name"
     t.decimal "price"
-    t.bigint "rides_id"
-    t.index ["rides_id"], name: "index_parks_on_rides_id"
+    t.bigint "ride_id"
+    t.index ["ride_id"], name: "index_parks_on_ride_id"
   end
 
   create_table "ride_mechanics", force: :cascade do |t|
@@ -37,9 +37,12 @@ ActiveRecord::Schema.define(version: 2020_10_23_153349) do
   create_table "rides", force: :cascade do |t|
     t.string "name"
     t.integer "rating"
+    t.bigint "park_id"
+    t.index ["park_id"], name: "index_rides_on_park_id"
   end
 
-  add_foreign_key "parks", "rides", column: "rides_id"
+  add_foreign_key "parks", "rides"
   add_foreign_key "ride_mechanics", "mechanics"
   add_foreign_key "ride_mechanics", "rides"
+  add_foreign_key "rides", "parks"
 end
