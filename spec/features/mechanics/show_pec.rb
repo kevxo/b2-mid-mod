@@ -8,6 +8,7 @@ RSpec.describe 'As a user' do
       ride1 = park.rides.create!(name: 'The Frog Hopper', rating: 7)
       ride2 = park.rides.create!(name: 'Fahrenheit', rating: 8)
       ride3 = park.rides.create!(name: 'The Kiss Raise', rating: 7)
+      ride4 = park.rides.create!(name: 'Lightning Racer', rating: 7)
       RideMechanic.create(ride_id: ride1.id, mechanic_id: mechanic2.id)
       RideMechanic.create(ride_id: ride2.id, mechanic_id: mechanic2.id)
       RideMechanic.create(ride_id: ride3.id, mechanic_id: mechanic2.id)
@@ -25,15 +26,15 @@ RSpec.describe 'As a user' do
 
       expect(page).to have_content('Add a ride to workload:')
 
-      name = 'The King'
-      rating = 9
-      fill_in :name, with: name
-      fill_in :rating, with: rating
+      fill_in :ride_id, with: ride4.id
 
-      save_and_open_page
       expect(page).to have_button('Submit')
       click_on 'Submit'
       expect(current_path).to eq("/mechanics/#{mechanic2.id}")
+
+      within "#current-rides" do
+        expect(page).to have_content(ride4.name)
+      end
     end
   end
 end

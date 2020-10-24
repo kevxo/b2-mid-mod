@@ -9,10 +9,8 @@
 </section>
 
 <h3>Add a ride to workload:</h3>
-<%= form_tag "/mechanics/#{@mechanic.id}" do %>
-  <%= label_tag :name %>
-  <%= text_field_tag :name %>
-  <%= label_tag :rating %>
-  <%= number_field_tag :rating %>
+<%= form_tag "/mechanics/#{@mechanic.id}", method: :post do %>
+  <%= label_tag :ride_id %>
+  <%= text_field_tag :ride_id %>
   <%= submit_tag "Submit" %>
 <% end %>
