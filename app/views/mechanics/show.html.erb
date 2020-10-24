@@ -1,12 +1,14 @@
 <h1>Mechanic: <%= @mechanic.name %></h1>
 <h2>Years of Experience: <%= @mechanic.experience %></h2>
 
-<section id="current-rides">
+<div id="current-rides">
   <h3>Current rides they're working on:</h3>
-  <% @mechanic.rides.each do |ride| %>
-    <%= ride.name %><br/>
+  <% @mechanic.order_name.each do |ride| %>
+    <section class="ride">
+      <%= ride.name %><br/>
+    </section>
   <% end %>
-</section>
+</div>
 
 <h3>Add a ride to workload:</h3>
 <%= form_tag "/mechanics/#{@mechanic.id}", method: :post do %>

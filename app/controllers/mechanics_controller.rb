@@ -8,9 +8,7 @@ class MechanicsController < ApplicationController
   end
 
   def update
-    mechanic = Mechanic.find(params[:id])
-    ride = Ride.find(params[:ride_id])
-    RideMechanic.create(ride_id: ride.id, mechanic_id: mechanic.id)
-    redirect_to "/mechanics/#{mechanic.id}"
+    RideMechanic.create(ride_id: params[:ride_id], mechanic_id: params[:id])
+    redirect_to "/mechanics/#{params[:id]}"
   end
 end

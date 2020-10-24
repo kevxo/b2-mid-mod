@@ -36,5 +36,36 @@ RSpec.describe 'As a user' do
         expect(page).to have_content(ride4.name)
       end
     end
+
+    it 'should list ride alphabetically' do
+      park = Park.create!(name: 'Hershey Park', price: 50.00)
+      mechanic2 = Mechanic.create!(name: 'Kara Smith', experience: 11)
+      ride1 = park.rides.create!(name: 'The Frog Hopper', rating: 7)
+      ride2 = park.rides.create!(name: 'Fahrenheit', rating: 8)
+      ride3 = park.rides.create!(name: 'The Kiss Raise', rating: 7)
+      ride4 = park.rides.create!(name: 'Lightning Racer', rating: 7)
+      RideMechanic.create(ride_id: ride1.id, mechanic_id: mechanic2.id)
+      RideMechanic.create(ride_id: ride2.id, mechanic_id: mechanic2.id)
+      RideMechanic.create(ride_id: ride3.id, mechanic_id: mechanic2.id)
+      RideMechanic.create(ride_id: ride4.id, mechanic_id: mechanic2.id)
+
+      visit "/mechanics/#{mechanic2.id}"
+
+      within all(".ride")[0] do
+        expect(page).to have_content(ride2.name)
+      end
+
+      within all(".ride")[1] do
+        expect(page).to have_content(ride4.name)
+      end
+
+      within all(".ride")[2] do
+        expect(page).to have_content(ride1.name)
+      end
+
+      within all(".ride")[3] do
+        expect(page).to have_content(ride3.name)
+      end
+    end
   end
 end
